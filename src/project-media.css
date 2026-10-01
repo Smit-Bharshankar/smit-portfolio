@@ -1,0 +1,13 @@
+.project-art { display: grid; place-items: center; padding: clamp(24px, 5vw, 76px); }
+.project-art::before { opacity: .72; }
+.laptop { position: relative; z-index: 2; width: min(78%, 880px); transform: translateY(clamp(-22px, -1.8vw, -8px)) perspective(1200px) rotateX(3deg); filter: drop-shadow(0 28px 28px rgba(0, 0, 0, .42)); }
+.laptop-screen { position: relative; overflow: hidden; aspect-ratio: 16 / 9.4; padding: 1.2%; border: 7px solid #25282b; border-radius: 14px 14px 4px 4px; background: #0b0c0e; }
+.laptop-screen > img { position: absolute; inset: 1.2%; z-index: 2; width: 97.6%; height: 97.6%; object-fit: cover; }
+.project-video { position: absolute; inset: 1.2%; z-index: 2; width: 97.6%; height: 97.6%; border: 0; background: #0b0c0e; }
+.laptop-camera { position: absolute; z-index: 4; top: 5px; left: 50%; width: 5px; height: 5px; border-radius: 50%; background: #111; transform: translateX(-50%); }
+.laptop-base { width: 112%; height: 13px; margin-left: -6%; border-radius: 2px 2px 11px 11px; background: linear-gradient(#4b4d50, #1a1c1e); position: relative; }
+.laptop-base::after { content: ''; position: absolute; top: 0; left: 43%; width: 14%; height: 3px; border-radius: 0 0 4px 4px; background: #0b0c0e; }
+.watch-demo { position: absolute; z-index: 5; bottom: clamp(20px, 4vw, 42px); right: clamp(20px, 4vw, 42px); display: flex; align-items: center; gap: 10px; border: 0; color: #111; background: var(--acid); padding: 9px 13px 9px 9px; font: 600 11px Manrope, sans-serif; cursor: pointer; transition: transform .2s, background .2s; }
+.watch-demo:hover { background: #e1ff91; transform: translateY(-3px); }.watch-demo span { width: 27px; height: 27px; display: grid; place-items: center; color: var(--acid); background: #121416; border-radius: 50%; }
+.video-modal { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 24px; background: rgba(4, 5, 6, .88); backdrop-filter: blur(12px); }.video-frame { position: relative; width: min(100%, 1080px); aspect-ratio: 16 / 9; background: #000; box-shadow: 0 30px 100px #000; }.video-frame iframe { width: 100%; height: 100%; border: 0; }.video-close { position: absolute; top: -42px; right: 0; border: 0; background: none; color: var(--ink); cursor: pointer; padding: 8px; }
+@media (max-width: 600px) { .project-art { padding: 24px 10px 60px; }.laptop { width: 94%; transform: translateY(-12px) perspective(1200px) rotateX(3deg); }.laptop-screen { border-width: 4px; border-radius: 8px 8px 2px 2px; }.watch-demo { right: 16px; bottom: 15px; }.video-frame { width: 100%; }.video-close { top: -38px; } }

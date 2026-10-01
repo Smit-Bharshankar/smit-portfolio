@@ -1,17 +1,29 @@
 export const siteConfig = {
-  name: 'SMIT', role: 'Software Engineer', email: 'your@email.com',
-  github: 'https://github.com/USERNAME', linkedin: 'https://linkedin.com/in/USERNAME',
+  name: 'SMIT', role: 'Software Engineer', email: 'smitbharshankar110@gmail.com',
+  github: 'https://github.com/Smit-Bharshankar',
+  linkedin: 'https://linkedin.com/in/smit-bharshankar',
+  AISaas : 'https://github.com/Smit-Bharshankar/AI-Resume-Ranker'
 }
 
 export const projects = [
-  { number: '01', title: 'Resume Intelligence', category: 'AI RECRUITMENT SAAS', description: 'A considered hiring workspace that turns job descriptions and resumes into structured, useful candidate insight.', technologies: ['React', 'Node.js', 'MongoDB', 'AI API'], gradient: 'violet' },
-  { number: '02', title: 'Market Atlas', category: 'MULTI-VENDOR COMMERCE', description: 'A multi-vendor commerce ecosystem designed around distinct customer, seller and administration workflows.', technologies: ['React', 'Express', 'MongoDB', 'REST APIs'], gradient: 'lime' },
-  { number: '03', title: 'Field Notes', category: 'CONTENT PLATFORM', description: 'A refined recipe and publishing experience where structured content meets a fast, tactile interface.', technologies: ['React', 'Node.js', 'MongoDB', 'Cloudinary'], gradient: 'amber' },
+  {
+    number: '01',
+    title: 'Sortres',
+    category: 'AI RECRUITMENT SAAS',
+    description:
+      'An AI-powered recruitment platform that transforms job descriptions and resumes into structured candidate insights, scoring, and recruiter-ready recommendations.',
+    technologies: ['React', 'Node.js', 'Prisma', 'PostgreSQL', 'BullMQ', 'Redis', 'Gemini AI'],
+    gradient: 'violet',
+    // Save your landing-page thumbnail at public/images/sortres-thumbnail.webp.
+    // It will automatically render inside the MacBook mockup.
+    image: '/images/sortres-thumbnail.webp',
+    videoEmbed: "https://youtu.be/TOcQavoA5jQ",
+  },
 ]
 
 export const skillGroups = [
   ['Frontend', 'React', 'TypeScript', 'JavaScript', 'HTML / CSS', 'Tailwind'],
   ['Backend', 'Node.js', 'Express', 'REST APIs', 'Authentication'],
-  ['Data', 'MongoDB', 'SQL', 'Schema Design', 'Cloudinary'],
-  ['Tooling', 'Git', 'Docker', 'AI APIs', 'Flutter'],
+  ['Database', 'MongoDB', 'PostgreSQL', 'Schema Design', 'Storage Bucket'],
+  ['Tooling', 'Git', 'Docker', 'CI / CD' , 'AI APIs', 'Flutter'],
 ]

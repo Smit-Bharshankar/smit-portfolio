@@ -3,6 +3,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowDownRight, ArrowUpRight, AtSign, Code2, Mail, Menu, X } from 'lucide-react'
 import { projects, siteConfig, skillGroups } from './data'
+import DemoSection from './Components/UI/DemoSection'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -57,7 +58,7 @@ function App() {
 
       <section className="intro section-reveal" id="about">
         <div className="section-kicker animate-in"><span>(01)</span> An introduction</div>
-        <div className="intro-copy"><h2 className="animate-in">I build web applications, APIs and products that turn <em>ideas</em> into usable software.</h2><div className="intro-detail animate-in"><p>Full-stack developer with a product-minded approach to React, Node.js and MongoDB. I care about crisp interfaces, clear systems and building technology that earns its place.</p><a href="#contact" className="text-link">More about my approach <ArrowDownRight size={16} /></a></div></div>
+        <div className="intro-copy"><h2 className="animate-in">I build web applications, APIs and products that turn <em>ideas</em> into usable software.</h2><div className="intro-detail animate-in"><p>Full-stack developer with a product-minded approach to React, Node.js and MongoDB or PostgreSQL. I care about crisp interfaces, clear systems and building technology that earns its place.</p><a href="#contact" className="text-link">More about my approach <ArrowDownRight size={16} /></a></div></div>
       </section>
 
       <section className="skills section-reveal" id="skills">
@@ -67,16 +68,18 @@ function App() {
       </section>
 
       <section className="projects section-reveal" id="work">
-        <div className="projects-top animate-in"><div className="section-kicker"><span>(03)</span> Selected work</div><p>A few product explorations and full-stack builds.<br />Replace these with your live project links.</p></div>
+        <div className="projects-top animate-in"><div className="section-kicker"><span>(03)</span> Selected work</div><p>A full-stack product built from the interface<br />to the systems powering it.</p></div>
         <div className="project-list">{projects.map((project) => <article className="project animate-in" key={project.number}>
-          <div className={`project-art ${project.gradient}`} aria-label={`${project.title} visual placeholder`}><div className="art-ui"><span>{project.number}/</span><b>{project.category}</b><div className="art-lines"><i /><i /><i /></div><div className="art-shape" /></div></div>
-          <div className="project-info"><span className="project-no">{project.number}</span><div><p className="project-category">{project.category}</p><h3>{project.title}</h3><p className="project-description">{project.description}</p><div className="tags">{project.technologies.map(tech => <span key={tech}>{tech}</span>)}</div></div><div className="project-actions"><a href={siteConfig.github} target="_blank" rel="noreferrer">Code <Code2 size={15} /></a><a href="#contact">Case study <ArrowUpRight size={15} /></a></div></div>
+          <div className={`project-art ${project.gradient}`} aria-label={`${project.title} project preview`}>
+            <DemoSection project={project} />
+          </div>
+          <div className="project-info"><span className="project-no">{project.number}</span><div><p className="project-category">{project.category}</p><h3>{project.title}</h3><p className="project-description">{project.description}</p><div className="tags">{project.technologies.map(tech => <span key={tech}>{tech}</span>)}</div></div><div className="project-actions"><a href={siteConfig.AISaas} target="_blank" rel="noreferrer">Code <Code2 size={15} /></a><a href="#contact">Case study <ArrowUpRight size={15} /></a></div></div>
         </article>)}</div>
       </section>
 
       <section className="experience section-reveal" id="experience">
-        <div className="section-kicker animate-in"><span>(04)</span> Experience</div><div className="experience-heading animate-in"><h2>Always building<br />the next useful thing.</h2><p>Use this timeline to add your verified professional experience.</p></div>
-        <div className="timeline"><div className="experience-item"><span>2025 — Present</span><div><p className="placeholder">[COMPANY / INDEPENDENT]</p><h3>Software Engineer</h3><p>Building full-stack applications, React interfaces and Node.js APIs with an emphasis on reusable architecture and dependable delivery.</p></div></div><div className="experience-item"><span>Earlier</span><div><p className="placeholder">[ADD EXPERIENCE]</p><h3>Developer / Builder</h3><p>Add a concise, factual description of a previous role, education, freelance engagement or product-building chapter here.</p></div></div></div>
+        <div className="section-kicker animate-in"><span>(04)</span> Experience</div><div className="experience-heading animate-in"><h2>Always building<br />the next useful thing.</h2></div>
+        <div className="timeline"><div className="experience-item"><span>2026 — Present</span><div><p className="placeholder">[INDEPENDENT]</p><h3>Developer / Builder</h3><p>Building full-stack applications, React interfaces and Node.js APIs with an emphasis on reusable architecture and dependable delivery.</p></div></div><div className="experience-item"><span>2025 — 2026</span><div><p className="placeholder">[INTELIVES]</p><h3>Software Engineer</h3><p>Add a concise, factual description of a previous role, education, freelance engagement or product-building chapter here.</p></div></div></div>
       </section>
 
       <section className="capabilities section-reveal"><div className="section-kicker animate-in"><span>(05)</span> How I work</div><div className="cap-grid">{[['01','Product thinking','Build around real user needs, not assumptions.'],['02','Full stack','Shape the interface, API and data model as one system.'],['03','Performance','Make fast experiences and efficient services the baseline.'],['04','Useful AI','Integrate intelligence where it creates genuine leverage.'],['05','Engineering','Keep the architecture understandable and ready to evolve.']].map(([num, title, copy]) => <article className="cap animate-in" key={num}><span>{num}</span><h3>{title}</h3><p>{copy}</p></article>)}</div></section>
