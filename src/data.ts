@@ -1,23 +1,26 @@
 export const siteConfig = {
-  name: 'SMIT', role: 'Software Engineer', email: 'smitbharshankar110@gmail.com',
+  name: 'SMIT',
+  fullName: 'Smit Bharshankar',
+  role: 'Software Engineer',
+  location: 'India',
+  email: 'smitbharshankar110@gmail.com',
   github: 'https://github.com/Smit-Bharshankar',
   linkedin: 'https://linkedin.com/in/smit-bharshankar',
-  AISaas : 'https://github.com/Smit-Bharshankar/AI-Resume-Ranker'
+  AISaas: 'https://github.com/Smit-Bharshankar/AI-Resume-Ranker',
 }
 
 export const projects = [
   {
     number: '01',
     title: 'Sortres',
-    category: 'AI RECRUITMENT SAAS',
+    category: 'AI recruitment SaaS',
     description:
       'An AI-powered recruitment platform that transforms job descriptions and resumes into structured candidate insights, scoring, and recruiter-ready recommendations.',
     technologies: ['React', 'Node.js', 'Prisma', 'PostgreSQL', 'BullMQ', 'Redis', 'Gemini AI'],
-    gradient: 'violet',
-    // Save your landing-page thumbnail at public/images/sortres-thumbnail.webp.
-    // It will automatically render inside the MacBook mockup.
+    // Save a landing-page thumbnail at public/images/sortres-thumbnail.webp.
+    // The video below is used first when it is present.
     image: '/images/sortres-thumbnail.webp',
-    videoEmbed: "https://youtu.be/TOcQavoA5jQ",
+    videoEmbed: 'https://youtu.be/TOcQavoA5jQ',
   },
 ]
 

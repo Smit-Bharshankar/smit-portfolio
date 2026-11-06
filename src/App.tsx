@@ -1,93 +1,267 @@
-import { useEffect, useRef, useState } from 'react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ArrowDownRight, ArrowUpRight, AtSign, Code2, Mail, Menu, X } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { ArrowDownRight, ArrowUp, ArrowUpRight, Menu, X } from 'lucide-react'
 import { projects, siteConfig, skillGroups } from './data'
 import DemoSection from './Components/UI/DemoSection'
 
-gsap.registerPlugin(ScrollTrigger)
-
-const navItems = [['About', '#about'], ['Work', '#work'], ['Experience', '#experience'], ['Contact', '#contact']]
+const capabilities = [  ['01', 'Product thinking', 'Build around real user needs, not assumptions.'],
+  ['02', 'Full stack', 'Shape the interface, API and data model as one system.'],
+  ['03', 'Performance', 'Make fast experiences and efficient services the baseline.'],
+  ['04', 'Useful AI', 'Integrate intelligence where it creates genuine leverage.'],
+  ['05', 'Engineering', 'Keep the architecture understandable and ready to evolve.'],
+] as const
 
 function App() {
-  const root = useRef<HTMLDivElement>(null)
   const [menuOpen, setMenuOpen] = useState(false)
-  const [loaded, setLoaded] = useState(false)
+  const now = new Date()
+  const today = new Intl.DateTimeFormat('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).format(now)
+  const dateTime = now.toISOString().slice(0, 10)
 
   useEffect(() => {
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const timer = window.setTimeout(() => setLoaded(true), reduce ? 80 : 650)
-    return () => window.clearTimeout(timer)
-  }, [])
+    if (!menuOpen) return
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMenuOpen(false)
+    }
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', closeOnEscape)
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', closeOnEscape)
+    }
+  }, [menuOpen])
 
-  useEffect(() => {
-    if (!loaded || !root.current || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const ctx = gsap.context(() => {
-      gsap.from('.reveal', { y: 30, opacity: 0, duration: .9, stagger: .11, ease: 'power3.out' })
-      gsap.utils.toArray<HTMLElement>('.section-reveal').forEach((section) => {
-        gsap.from(section.querySelectorAll('.animate-in'), { scrollTrigger: { trigger: section, start: 'top 78%' }, y: 28, opacity: 0, duration: .8, stagger: .1, ease: 'power3.out' })
-      })
-      gsap.to('.orb-one', { scrollTrigger: { trigger: '#about', start: 'top bottom', end: 'bottom top', scrub: 1 }, y: 130, x: 70 })
-      gsap.utils.toArray<HTMLElement>('.experience-item').forEach((item) => gsap.from(item, { scrollTrigger: { trigger: item, start: 'top 86%' }, x: 36, opacity: 0, duration: .65 }))
-    }, root)
-    return () => ctx.revert()
-  }, [loaded])
+  return (
+    <>
+      <header className="site-header">
+        <div className="container nav-inner">
+          <a className="brand" href="#top" aria-label={`${siteConfig.fullName}, back to top`}>
+            {siteConfig.fullName}
+          </a>
 
-  return <div ref={root} className={loaded ? 'app is-loaded' : 'app'}>
-    <div className="preloader" aria-hidden="true"><span>SMIT</span><b>— 100</b></div>
-    <div className="grain" />
-    <header className="nav-wrap">
-      <a className="brand" href="#top" aria-label="Back to top">SMIT<span>®</span></a>
-      <nav className={menuOpen ? 'nav open' : 'nav'} aria-label="Main navigation">
-        {navItems.map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</a>)}
-      </nav>
-      <a className="nav-email" href={`mailto:${siteConfig.email}`}>Start a project <ArrowUpRight size={15} /></a>
-      <button className="menu" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">{menuOpen ? <X /> : <Menu />}</button>
-    </header>
+          <nav id="main-nav" className={menuOpen ? 'nav open' : 'nav'} aria-label="Main navigation">
+            <a href="#work" onClick={() => setMenuOpen(false)}>Work</a>
+            <a href="#skills" onClick={() => setMenuOpen(false)}>Skills</a>
+            <a href="#experience" onClick={() => setMenuOpen(false)}>Experience</a>
+            <a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
+            <a className="nav-overlay-email" href={`mailto:${siteConfig.email}`}>
+              Email <ArrowUpRight size={18} aria-hidden="true" />
+            </a>
+          </nav>
 
-    <main id="top">
-      <section className="hero" aria-labelledby="hero-title">
-        <div className="hero-grid" /><div className="orb orb-one" /><div className="orb orb-two" />
-        <div className="hero-inner">
-          <p className="eyebrow reveal"><i /> Software engineer · India</p>
-          <h1 id="hero-title"><span className="reveal">Building digital</span><span className="reveal accent-line">systems <em>&amp;</em> experiences.</span></h1>
-          <div className="hero-bottom reveal"><p>I translate ambitious ideas into thoughtful, high-performing web products — from interface to infrastructure.</p><div className="hero-links"><a className="button button-primary" href="#work">View selected work <ArrowDownRight size={17} /></a><a className="text-link" href="#contact">Get in touch <ArrowUpRight size={16} /></a></div></div>
+          <a className="nav-action" href={`mailto:${siteConfig.email}`}>
+            Email <ArrowUpRight size={14} aria-hidden="true" />
+          </a>
+
+          <button
+            className="menu"
+            type="button"
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-expanded={menuOpen}
+            aria-controls="main-nav"
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          >
+            {menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+          </button>
         </div>
-        <a className="scroll-cue reveal" href="#about"><span>Scroll to explore</span><b /></a>
-      </section>
+      </header>
 
-      <section className="intro section-reveal" id="about">
-        <div className="section-kicker animate-in"><span>(01)</span> An introduction</div>
-        <div className="intro-copy"><h2 className="animate-in">I build web applications, APIs and products that turn <em>ideas</em> into usable software.</h2><div className="intro-detail animate-in"><p>Full-stack developer with a product-minded approach to React, Node.js and MongoDB or PostgreSQL. I care about crisp interfaces, clear systems and building technology that earns its place.</p><a href="#contact" className="text-link">More about my approach <ArrowDownRight size={16} /></a></div></div>
-      </section>
+      <main id="top">
+        <section className="hero" id="about" aria-labelledby="hero-title">
+          <div className="container corridor">
+            <p className="dateline">
+              <time dateTime={dateTime}>{today}</time>
+              <span aria-hidden="true">·</span>
+              <span>{siteConfig.location}</span>
+            </p>
 
-      <section className="skills section-reveal" id="skills">
-        <div className="section-kicker animate-in"><span>(02)</span> Technical vocabulary</div>
-        <div className="skill-header animate-in"><h2>Tools for the whole<br />product picture.</h2><p>Comfortable moving between the polished surface and the systems beneath it.</p></div>
-        <div className="skill-grid">{skillGroups.map(([group, ...skills]) => <div className="skill-group animate-in" key={group}><p>{group}</p><ul>{skills.map(skill => <li key={skill}>{skill}<span>↗</span></li>)}</ul></div>)}</div>
-      </section>
+            <div className="wordmark crop">
+              <h1 id="hero-title">
+                <span>Smit</span>
+                <span>Bharshankar</span>
+              </h1>
+              <span className="wordmark-rule" aria-hidden="true" />
+            </div>
 
-      <section className="projects section-reveal" id="work">
-        <div className="projects-top animate-in"><div className="section-kicker"><span>(03)</span> Selected work</div><p>A full-stack product built from the interface<br />to the systems powering it.</p></div>
-        <div className="project-list">{projects.map((project) => <article className="project animate-in" key={project.number}>
-          <div className={`project-art ${project.gradient}`} aria-label={`${project.title} project preview`}>
-            <DemoSection project={project} />
+            <p className="lead hero-lead">
+              Web products, end to end: from the React interface to the database.
+            </p>
+
+            <div className="hero-actions">
+              <a className="button button--primary" href="#work">
+                See the work <ArrowDownRight size={16} aria-hidden="true" />
+              </a>
+              <a className="text-link" href={`mailto:${siteConfig.email}`}>
+                Email me <ArrowUpRight size={15} aria-hidden="true" />
+              </a>
+            </div>
           </div>
-          <div className="project-info"><span className="project-no">{project.number}</span><div><p className="project-category">{project.category}</p><h3>{project.title}</h3><p className="project-description">{project.description}</p><div className="tags">{project.technologies.map(tech => <span key={tech}>{tech}</span>)}</div></div><div className="project-actions"><a href={siteConfig.AISaas} target="_blank" rel="noreferrer">Code <Code2 size={15} /></a><a href="#contact">Case study <ArrowUpRight size={15} /></a></div></div>
-        </article>)}</div>
-      </section>
+        </section>
 
-      <section className="experience section-reveal" id="experience">
-        <div className="section-kicker animate-in"><span>(04)</span> Experience</div><div className="experience-heading animate-in"><h2>Always building<br />the next useful thing.</h2></div>
-        <div className="timeline"><div className="experience-item"><span>2026 — Present</span><div><p className="placeholder">[INDEPENDENT]</p><h3>Developer / Builder</h3><p>Building full-stack applications, React interfaces and Node.js APIs with an emphasis on reusable architecture and dependable delivery.</p></div></div><div className="experience-item"><span>2025 — 2026</span><div><p className="placeholder">[INTELIVES]</p><h3>Software Engineer</h3><p>Add a concise, factual description of a previous role, education, freelance engagement or product-building chapter here.</p></div></div></div>
-      </section>
+        <section className="section section--skills" id="skills" aria-labelledby="skills-title">
+          <div className="container">
+            <div className="section-head">
+              <h2 id="skills-title">What I do</h2>
+              <p className="section-note">Based in {siteConfig.location}.</p>
+            </div>
 
-      <section className="capabilities section-reveal"><div className="section-kicker animate-in"><span>(05)</span> How I work</div><div className="cap-grid">{[['01','Product thinking','Build around real user needs, not assumptions.'],['02','Full stack','Shape the interface, API and data model as one system.'],['03','Performance','Make fast experiences and efficient services the baseline.'],['04','Useful AI','Integrate intelligence where it creates genuine leverage.'],['05','Engineering','Keep the architecture understandable and ready to evolve.']].map(([num, title, copy]) => <article className="cap animate-in" key={num}><span>{num}</span><h3>{title}</h3><p>{copy}</p></article>)}</div></section>
+            <p className="section-lead">
+              Full-stack developer with a product-minded approach to React, Node.js and MongoDB or
+              PostgreSQL. I care about crisp interfaces, clear systems and building technology that
+              earns its place.
+            </p>
 
-      <section className="contact" id="contact"><div className="contact-glow" /><p className="eyebrow"><i /> Have an idea?</p><h2>Let's build<br /><em>it well.</em></h2><a className="contact-email" href={`mailto:${siteConfig.email}`}>{siteConfig.email}<ArrowUpRight /></a><div className="contact-links"><a href={siteConfig.github} target="_blank" rel="noreferrer">GitHub <Code2 size={15} /></a><a href={siteConfig.linkedin} target="_blank" rel="noreferrer">LinkedIn <AtSign size={15} /></a><a href={`mailto:${siteConfig.email}`}>Email <Mail size={15} /></a></div></section>
-    </main>
-    <footer><span>© {new Date().getFullYear()} {siteConfig.name}. Built with intention.</span><a href="#top">Back to top <ArrowUpRight size={15} /></a></footer>
-  </div>
+            <ul className="skill-list">
+              {skillGroups.map(([group, ...skills], index) => (
+                <li className="skill-row" key={group}>
+                  <span className="skill-index">{String(index + 1).padStart(2, '0')}</span>
+                  <h3>{group}</h3>
+                  <p>{skills.join(', ')}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <section className="section section--work" id="work" aria-labelledby="work-title">
+          <div className="container">
+            <div className="section-head">
+              <h2 id="work-title">Work</h2>
+              <p className="section-note">One product, shown working.</p>
+            </div>
+
+            {projects.map((project) => (
+              <article className="project" key={project.number}>
+                <div className="project-copy">
+                  <div className="project-meta">
+                    <span>{project.number}</span>
+                    <span>{project.category}</span>
+                  </div>
+
+                  <h3>{project.title}</h3>
+                  <p className="project-description">{project.description}</p>
+
+                  <ul className="tags" aria-label="Technologies">
+                    {project.technologies.map((technology) => (
+                      <li key={technology}>{technology}</li>
+                    ))}
+                  </ul>
+
+                  <div className="project-actions">
+                    <a
+                      className="text-link"
+                      href={siteConfig.AISaas}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Sortres code on GitHub"
+                    >
+                      Code <ArrowUpRight size={15} aria-hidden="true" />
+                    </a>
+                    <a
+                      className="text-link"
+                      href={`mailto:${siteConfig.email}?subject=Sortres`}
+                    >
+                      Ask about Sortres <ArrowUpRight size={15} aria-hidden="true" />
+                    </a>
+                  </div>
+                </div>
+
+                <div className="project-figure">
+                  <DemoSection project={project} />
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="section section--process" id="process" aria-labelledby="process-title">
+          <div className="container">
+            <div className="section-head section-head--single">
+              <h2 id="process-title" className="section-title--lg">How I work</h2>
+            </div>
+
+            <ol className="process-list">
+              {capabilities.map(([number, title, copy]) => (
+                <li className="process-step" key={number}>
+                  <h3>
+                    <span className="step-number">{number}</span>
+                    {title}
+                  </h3>
+                  <p>{copy}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        <section className="section section--experience" id="experience" aria-labelledby="experience-title">
+          <div className="container">
+            <div className="section-head section-head--single">
+              <h2 id="experience-title" className="section-title--lg">Experience</h2>
+            </div>
+
+            <div className="role-list">
+              <article className="role">
+                <p className="role-dates">2026 to present</p>
+                <div className="role-body">
+                  <h3>Developer / Builder</h3>
+                  <p className="role-org">Independent</p>
+                  <p>
+                    Building full-stack applications, React interfaces and Node.js APIs with an
+                    emphasis on reusable architecture and dependable delivery.
+                  </p>
+                </div>
+              </article>
+
+              <article className="role">
+                <p className="role-dates">2025 to 2026</p>
+                <div className="role-body">
+                  <h3>Software Engineer</h3>
+                  <p className="role-org">Intelives</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section className="contact" id="contact" aria-labelledby="contact-title">
+          <div className="container contact-inner">
+            <h2 id="contact-title">Let’s build it well.</h2>
+            <p className="contact-lead">Tell me what you are building.</p>
+
+            <a className="contact-email" href={`mailto:${siteConfig.email}`}>
+              <span>{siteConfig.email}</span>
+              <ArrowUpRight size={30} aria-hidden="true" />
+            </a>
+
+            <div className="contact-links">
+              <a className="text-link" href={siteConfig.github} target="_blank" rel="noreferrer">
+                GitHub <ArrowUpRight size={15} aria-hidden="true" />
+              </a>
+              <a className="text-link" href={siteConfig.linkedin} target="_blank" rel="noreferrer">
+                LinkedIn <ArrowUpRight size={15} aria-hidden="true" />
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="footer">
+        <div className="container footer-inner">
+          <p className="colophon">
+            {siteConfig.fullName}, software engineer, {siteConfig.location}. Set in Hedvig Letters
+            Serif and Geist. Built with React and Vite. © {now.getFullYear()}.
+          </p>
+          <a className="text-link" href="#top">
+            Back to top <ArrowUp size={15} aria-hidden="true" />
+          </a>
+        </div>
+      </footer>
+    </>
+  )
 }
 
 export default App
